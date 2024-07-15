@@ -26,7 +26,7 @@ interface Node {
   symbol: string;
   children: Node[];
   status?: string;
-  scheduled?: DateTime;
+  due?: DateTime;
 }
 
 export function textToString(node: Node) {
@@ -39,7 +39,7 @@ export function toString(node: Node, indentation = "") {
   let result = `${indentation}${textToString(node)}`;
 
   for (const child of node.children) {
-    if (!child.scheduled && !timeFromStartRegExp.test(child.text)) {
+    if (!child.due && !timeFromStartRegExp.test(child.text)) {
       result += toString(child, `\t${indentation}`);
     }
   }
@@ -96,7 +96,7 @@ export function toTask(sTask: STask, day: Moment): Task {
 }
 
 export function getScheduledDay(sTask: STask) {
-  const scheduledPropDay: string = sTask.scheduled?.toFormat?.(
+  const scheduledPropDay: string = sTask.due?.toFormat?.(
     defaultDayFormatForLuxon,
   );
   const dailyNoteDay = getDateFromPath(sTask.path, "day")?.format(
