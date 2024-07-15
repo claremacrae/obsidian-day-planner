@@ -96,9 +96,9 @@ export function toTask(sTask: STask, day: Moment): Task {
 }
 
 export function getScheduledDay(sTask: STask) {
-  const scheduledPropDay: string = sTask.due?.toFormat?.(
-    defaultDayFormatForLuxon,
-  );
+  // Use due date if its present, or use scheduled otherwise.
+  const date = sTask.due ? sTask.due : sTask.scheduled;
+  const scheduledPropDay: string = date?.toFormat?.(defaultDayFormatForLuxon);
   const dailyNoteDay = getDateFromPath(sTask.path, "day")?.format(
     defaultDayFormat,
   );
