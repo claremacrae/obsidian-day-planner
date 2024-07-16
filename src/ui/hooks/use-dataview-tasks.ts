@@ -22,9 +22,13 @@ export function useDataviewTasks({
         ...$tasksFromExtraSources,
       ];
 
+      const cancelledStatuses = "->";
       return $settingsStore.showCompletedTasks
         ? allTasks
-        : allTasks.filter((sTask: STask) => !sTask.completed);
+        : allTasks.filter(
+            (sTask: STask) =>
+              !sTask.completed && !cancelledStatuses.includes(sTask.status),
+          );
     },
   );
 }
