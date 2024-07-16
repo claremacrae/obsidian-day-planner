@@ -4,7 +4,6 @@ import { get, Readable, Writable } from "svelte/store";
 
 import { ObsidianFacade } from "../../../service/obsidian-facade";
 import { PlacedTask, UnscheduledTask } from "../../../types";
-import { createTask } from "../../../util/task-utils";
 
 import { EditMode, EditOperation } from "./types";
 
@@ -25,13 +24,14 @@ export function createEditHandlers({
   editOperation,
 }: UseEditHandlersProps) {
   function handleContainerMouseDown() {
-    const newTask = createTask(day, get(cursorMinutes));
-
-    startEdit({
-      task: { ...newTask, isGhost: true },
-      mode: EditMode.CREATE,
-      day,
-    });
+    // Do not create a new task in daily note when mis-clicking on calendar
+    // const newTask = createTask(day, get(cursorMinutes));
+    //
+    // startEdit({
+    //   task: { ...newTask, isGhost: true },
+    //   mode: EditMode.CREATE,
+    //   day,
+    // });
   }
 
   function handleResizerMouseDown(task: PlacedTask, mode: EditMode) {
